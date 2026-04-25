@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main(void)
+{
+    int fd;
+
+    fd = creat("file1.dat", S_IRUSR | S_IWUSR);  // Read & write permission for user
+
+    if (fd == -1)
+    {
+        perror("Error creating file1.dat");
+        return 1;
+    }
+    else
+    {
+        printf("file1.dat created and opened for read/write access\n");
+        printf("file1.dat is currently empty\n");
+    }
+
+    close(fd);
+    return 0;
+}
