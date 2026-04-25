@@ -1,0 +1,81 @@
+#include <stdio.h>
+
+int n = 0, buffersize = 0, currentsize = 0;
+
+void producer()
+{
+    printf("\nEnter number of elements to be produced: ");
+    scanf("%d", &n);
+
+    if (n <= (buffersize - currentsize))
+    {
+        currentsize += n;
+        printf("%d elements produced. Current buffer size: %d/%d\n",
+               n, currentsize, buffersize);
+    }
+    else
+    {
+        printf("\nBuffer does not have enough space\n");
+    }
+}
+
+void consumer()
+{
+    int x;
+
+    printf("\nEnter number of elements to be consumed: ");
+    scanf("%d", &x);
+
+    if (currentsize >= x)
+    {
+        currentsize -= x;
+        printf("%d elements consumed. Remaining in buffer: %d\n",
+               x, currentsize);
+    }
+    else
+    {
+        printf("\nCannot consume more than available elements\n");
+    }
+}
+
+int main(void)
+{
+    int c;
+
+    printf("Enter maximum size of buffer: ");
+    scanf("%d", &buffersize);
+
+    do
+    {
+        printf("\n1. Producer\n2. Consumer\n3. Exit");
+        printf("\nEnter choice: ");
+        scanf("%d", &c);
+
+        switch (c)
+        {
+        case 1:
+            if (currentsize >= buffersize)
+                printf("\nBuffer is full. Cannot produce\n");
+            else
+                producer();
+            break;
+
+        case 2:
+            if (currentsize <= 0)
+                printf("\nBuffer is empty. Cannot consume\n");
+            else
+                consumer();
+            break;
+
+        case 3:
+            printf("\nExiting...\n");
+            break;
+
+        default:
+            printf("\nInvalid choice\n");
+        }
+
+    } while (c != 3);
+
+    return 0;
+}
